@@ -12,16 +12,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PVNInterpreter {
 
-    public static int test_int;
-    public static String test_str;
-
-    public static void main(String[] args) throws FileNotFoundException, URISyntaxException {
-        PVNInterpreter interpreter = new PVNInterpreter(PVNInterpreter.class.getClassLoader().getResource("test.pvn"));
-        interpreter.grabPvn(interpreter);
-        System.out.println(test_int);
-        System.out.println(test_str);
-    }
-
     private final Parser parser;
 
     public PVNInterpreter(URL file) throws FileNotFoundException, URISyntaxException {
