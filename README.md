@@ -1,4 +1,4 @@
-# PVN-Interpreter
+# PVN-Java
 
 The java-lib for PVN from AxiPaxi.
 
