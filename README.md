@@ -1,6 +1,6 @@
 # PVN-Java
 
-The java-lib for PVN from AxiPaxi: [PVN-Repository](https://github.com/LordAxi/PandaVariableNotation)
+The java-lib for PVN from [LordAxi](https://github.com/LordAxi): [PVN-Repository](https://github.com/LordAxi/PandaVariableNotation).
 
 # How to use
 
