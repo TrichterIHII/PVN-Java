@@ -24,8 +24,11 @@ public class Parser {
         this.lexer = lexer;
         for (currentLine = 0; currentLine < lexer.allTokens.size(); currentLine++) {
             Statement s = parseStatement(lexer.allTokens.get(currentLine));
-            if (s.mod == Lexer.TOKEN_TYPE) allStatements.add(s);
-            else allStatements.put(s.name.text.toString(), s);
+            if (s.mod == Lexer.TOKEN_TYPE.NEW) {
+                allStatements.add(s);
+            } else if (s.mod == Lexer.TOKEN_TYPE.EDIT) {
+                allStatements.add(s);
+            }
         }
     }
 
@@ -50,17 +53,12 @@ public class Parser {
         // Name & Error checks
         Token name = tokens.get(currentToken);
         if (name.type != Lexer.TOKEN_TYPE.INDENT) ErrorHandle.throwError(ErrorHandle.Error.NOT_VALID_NAME, currentLine, currentToken, lexer.getUrl().toString());
-        List<Statement> sameNameStatements = allStatements.stream().filter(s -> s.name.equals(name)).toList();
-        boolean existSameNameStatement = allStatements.stream().anyMatch(s -> s.name.equals(name));
+        List<Statement> sameNameStatements = allStatements.stream().filter(s -> s.name.text.toString().equals(name.text.toString())).toList();
+        boolean existSameNameStatement = allStatements.stream().anyMatch(s -> s.name.text.toString().equals(name.text.toString()));
 
         if (mod == Lexer.TOKEN_TYPE.NEW && existSameNameStatement) ErrorHandle.throwError(ErrorHandle.Error.ALREADY_EXISTING, currentLine, currentToken, lexer.getUrl().toString());
-        if (mod == Lexer.TOKEN_TYPE.EDIT) {
-            for (Statement s : sameNameStatements) {
-                if (!existSameNameStatement) ErrorHandle.throwError(ErrorHandle.Error.NOT_EXISTING, currentLine, currentToken, lexer.getUrl().toString());
-                // remove old statement
-                allStatements.remove(s);
-            }
-        }
+        if (mod == Lexer.TOKEN_TYPE.EDIT) allStatements.removeAll(sameNameStatements);
+
         res.name = name;
         currentToken++;
 
@@ -74,4 +72,3 @@ public class Parser {
         return res;
     }
 }
-
