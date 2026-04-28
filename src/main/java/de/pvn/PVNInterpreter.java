@@ -6,11 +6,26 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PVNInterpreter {
+
+    public static String name;
+
+    public static void main(String[] args) throws FileNotFoundException, URISyntaxException {
+
+        PVNInterpreter interpreter = new PVNInterpreter(PVNInterpreter.class.getClassLoader().getResource("test.pvn"));
+
+        System.out.println(LocalTime.now());
+        interpreter.grabPvn(interpreter);
+        System.out.println(LocalTime.now());
+        
+        System.out.println(name);
+
+    }
 
     private final Parser parser;
 
