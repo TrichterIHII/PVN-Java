@@ -23,7 +23,9 @@ public class Parser {
     public Parser(@NotNull Lexer lexer) {
         this.lexer = lexer;
         for (currentLine = 0; currentLine < lexer.allTokens.size(); currentLine++) {
-            allStatements.add(parseStatement(lexer.allTokens.get(currentLine)));
+            Statement s = parseStatement(lexer.allTokens.get(currentLine));
+            if (s.mod == Lexer.TOKEN_TYPE) allStatements.add(s);
+            else allStatements.put(s.name.text.toString(), s);
         }
     }
 
